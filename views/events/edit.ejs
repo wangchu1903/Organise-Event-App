@@ -1,0 +1,77 @@
+<% layout('layouts/boilerplate')%>
+
+    <div class="row">
+        <h1 class="text-center"> Edit event - <%= event.title %>
+        </h1>
+        <div class="col-6 offset-3">
+
+            <form action="/events/<%= event._id %>?_method=PUT" method="POST" class="validated"
+                enctype="multipart/form-data" novalidate>
+
+
+                <div class="mb-3">
+                    <label class="form-label" for="title"> Title </label>
+                    <input class="form-control" id="title" type="text" name="event[title]" value="<%= event.title %>"
+                        required>
+                    <div class="valid-feedback">
+                        looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="location"> Location </label>
+                    <input class="form-control" id="location" type="text" name="event[location]"
+                        value="<%= event.location %>" required>
+                    <div class="valid-feedback">
+                        looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="price"> Price </label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control" id="price" name="event[price]"
+                            value="<%= event.price %>" required>
+                        <div class="valid-feedback">looks good</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" id="description" style="height: 100px" name="event[description]"
+                        required> <%=event.description%></textarea>
+                    <div class="valid-feedback">looks good</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Add more Images</label>
+                    <input type="file" class="form-control" id="image" aria-describedby="inputGroupFileAddon04"
+                        aria-label="Upload" name="image" id="" multiple>
+                </div>
+
+                <div class="mb-3">
+                    <% event.image.forEach(function(img, i) { %>
+                        <img src="<%= img.url %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image- <%= i %>" name="deleteImages[]"
+                                value="<%= img.filename %>">
+                        </div>
+                        <label for="image- <%= i %>">Delete</label>
+                        <% }) %>
+
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-outline-success"> Update Event</button>
+                </div>
+
+
+
+            </form>
+
+            <a class="btn btn-outline-primary btn-sm" href="/events">Back</a>
+
+
+        </div>
+    </div>
