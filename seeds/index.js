@@ -27,9 +27,26 @@ const seedDB = async () => {
             author: '6464ecb2368b322970c5d6a1',
             location: `${cities[random].city},${cities[random].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            image: 'https://source.unsplash.com/collection/9537244',
+
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perspiciatis minus dolor laborum ab nam iusto ullam qui culpa vero, voluptatem deleniti quo veritatis dolores, optio hic atque possimus? Sed?",
-            price
+            price,
+            geometry: {
+                type: "Point",
+                coordinates: [
+                    cities[random].longitude,
+                    cities[random].latitude,
+                ]
+            },
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dwbdr1cx2/image/upload/v1689173811/OrganizeApp/ax8eygxrax3dzpmjczsh.jpg',
+                    filename: 'OrganizeApp/ax8eygxrax3dzpmjczsh'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dwbdr1cx2/image/upload/v1689173811/OrganizeApp/yevkrpzls78turmbkmo9.jpg',
+                    filename: 'OrganizeApp/yevkrpzls78turmbkmo9'
+                },
+            ]
 
         })
         await event.save();

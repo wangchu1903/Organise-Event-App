@@ -1,16 +1,14 @@
 <% layout('layouts/boilerplate')%>
 
-    <h1> All events</h1>
-    <div>
-        <a href="/events/new"> Add Event </a>
-    </div>
-
-
     <% for(let event of events){ %>
-        <div class="card" mb-3>
+        <div class="card text-bg-dark mb-3">
             <div class="row">
                 <div class="col-md-4">
-                    <img class="img-fluid" alt="" src="<%= event.image%>">
+                    <% if(event.image.length) {%>
+                        <img class="img-fluid" alt="" src="<%= event.image[0].url%>">
+                        <% }else{%>
+                            <img class="img-fluid" src="" alt="">
+                            <% } %>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -25,7 +23,7 @@
                                 <%= event.location %>
                             </small>
                         </p>
-                        <a class="btn btn-light " href="/events/<%= event._id %>"> View </a>
+                        <a class="btn btn-outline-light" href="/events/<%= event._id %>"> View </a>
                     </div>
                 </div>
             </div>

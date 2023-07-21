@@ -1,7 +1,8 @@
+
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-console.log(process.env.SECRET);
+
 const express = require('express')
 const app = express();
 const path = require('path')
@@ -21,11 +22,12 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 
-const User = require('./models/user')
+const User = require('./models/user');
+const MongoStore = require('connect-mongo');
+const dbUrl = process.env.DB_URL;
 
 
-
-mongoose.connect('mongodb://localhost:27017/OrganizeApp', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("mongo connection open!!")
 
@@ -43,7 +45,20 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeasecret!'
+    }
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
+
 const sessionConfig = {
+    store,
     secret: 'nothingsecret',
     resave: false,
     saveUninitialized: true,
@@ -70,9 +85,6 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     next();
 })
-
-
-
 
 
 app.use('/events', eventRoutes);

@@ -3,7 +3,7 @@
     <div class="row">
         <h1 class="text-center"> Edit event - <%= event.title %>
         </h1>
-        <div class="col-6 offset-3">
+        <div class="container d-flex justify-content-center align-items-center mt-3">
 
             <form action="/events/<%= event._id %>?_method=PUT" method="POST" class="validated"
                 enctype="multipart/form-data" novalidate>
@@ -52,9 +52,9 @@
 
                 <div class="mb-3">
                     <% event.image.forEach(function(img, i) { %>
-                        <img src="<%= img.url %>" class="img-thumbnail" alt="">
+                        <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
                         <div class="form-check-inline">
-                            <input type="checkbox" id="image- <%= i %>" name="deleteImages[]"
+                            <input type="checkbox" id="image-<%= i %>" name="deleteImages[]"
                                 value="<%= img.filename %>">
                         </div>
                         <label for="image- <%= i %>">Delete</label>
@@ -66,11 +66,11 @@
                     <button class="btn btn-outline-success"> Update Event</button>
                 </div>
 
+                <a class="btn btn-outline-primary btn-sm" href="/events">Back</a>
 
 
             </form>
 
-            <a class="btn btn-outline-primary btn-sm" href="/events">Back</a>
 
 
         </div>
